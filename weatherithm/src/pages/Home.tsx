@@ -6,8 +6,7 @@ const Home: React.FC = () => {
   const [bgColor, setBgColor] = useState<string>('#191970');
 
   useEffect(() => {
-    const searchLink =
-      document.querySelector<HTMLAnchorElement>('.search-link');
+    const searchLink = document.querySelector<HTMLAnchorElement>('.main-link');
 
     const handleMouseEnter = () => {
       setBgColor('#87cefa');
@@ -29,11 +28,11 @@ const Home: React.FC = () => {
   });
 
   return (
-    <div className="background" style={{ backgroundColor: bgColor }}>
+    <div className="home-background" style={{ backgroundColor: bgColor }}>
       <div className="circle">
         <h1>Weatherithm</h1>
         <p>당신의 하루를 맞춤 설계하는 날씨 서비스</p>
-        <Link to="/short_range" className="search-link">
+        <Link to="/main" className="main-link">
           시작하기
         </Link>
       </div>

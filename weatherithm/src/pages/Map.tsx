@@ -24,7 +24,7 @@ interface Place {
 
 const { kakao } = window;
 
-const Map = () => {
+const Map: React.FC = () => {
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
 

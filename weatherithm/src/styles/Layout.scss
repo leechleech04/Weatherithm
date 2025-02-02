@@ -22,8 +22,6 @@
       width: 100%;
       li {
         width: 100%;
-        display: flex;
-        color: #fff;
         font-size: 1.5rem;
         font-weight: 700;
         padding: 1rem 3rem;
@@ -34,8 +32,13 @@
           padding-top: calc(1rem - 3px);
           padding-bottom: calc(1rem - 3px);
         }
-        p {
-          flex-grow: 1;
+        .menu-link {
+          display: flex;
+          text-decoration: none;
+          color: #fff;
+          p {
+            flex-grow: 1;
+          }
         }
       }
     }
@@ -59,4 +62,11 @@
 
 .hidden {
   transform: translateX(-15vw);
+}
+
+.content-box {
+  height: 100vh;
+  width: 70vw;
+  margin: 0 auto;
+  padding: 5% 5%;
 }
