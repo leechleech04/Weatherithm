@@ -1,7 +1,7 @@
 import '../styles/ShortRange.scss';
 import { CiLocationArrow1 } from 'react-icons/ci';
 import { TfiTarget } from 'react-icons/tfi';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setX } from '../store';
 import { setY } from '../store';
@@ -17,7 +17,18 @@ const ShortRange = () => {
 
   const pos = useSelector((state: Position) => state);
 
-  const [region, setRegion] = useState('');
+  const kakao = useSelector((state: any) => state.kakao);
+
+  const [places, setPlaces] = useState<any>();
+  useEffect(() => {
+    if (kakao.maps.services) {
+      setPlaces(new kakao.maps.services.Places());
+    }
+  }, [kakao]);
+
+  const [keyword, setKeyword] = useState('');
+
+  const [regionList, setRegionList] = useState<any[]>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -26,24 +37,43 @@ const ShortRange = () => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
+    const callback = (result: any, status: any) => {
+      if (status === kakao.maps.services.Status.OK) {
+        setRegionList(result);
+      }
+    };
+
+    places.keywordSearch(keyword, callback);
   };
 
   return (
     <div className="background">
       <h1 className="page-title">단기예보</h1>
-      <form className="region-search-box" onSubmit={onSubmit}>
+      <form className="keyword-search-box" onSubmit={onSubmit}>
         <input
           type="text"
-          placeholder="지역을 입력하세요"
-          value={region}
+          placeholder="주요지명으로 입력하세요"
+          value={keyword}
           autoFocus
           ref={inputRef}
-          onChange={(e) => setRegion(e.target.value)}
+          onChange={(e) => setKeyword(e.target.value)}
         />
         <button type="submit">
           <CiLocationArrow1 size={40} className="search-icon" />
         </button>
       </form>
+      <div style={{ position: 'relative', width: '100%' }}>
+        {regionList.length > 0 && (
+          <ul className="region-list">
+            {regionList.map((region) => (
+              <li key={region.id} className="region">
+                <h2>{region.place_name}</h2>
+                <p>{region.address_name}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
       <div
         className="current-location"
         onClick={() => {

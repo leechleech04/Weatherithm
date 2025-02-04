@@ -1,7 +1,7 @@
 import { Outlet, Link } from 'react-router-dom';
 import { IoMenu } from 'react-icons/io5';
 import { TiWeatherPartlySunny } from 'react-icons/ti';
-import './styles/Layout.scss';
+import '../styles/Layout.scss';
 import { useEffect, useState } from 'react';
 
 const Layout: React.FC = () => {
@@ -10,9 +10,9 @@ const Layout: React.FC = () => {
   useEffect(() => {
     const menu = document.querySelector<HTMLAnchorElement>('.menu-box');
     if (visibility) {
-      menu?.classList.remove('hidden');
+      menu?.classList.remove('menu-hidden');
     } else {
-      menu?.classList.add('hidden');
+      menu?.classList.add('menu-hidden');
     }
   }, [visibility]);
 

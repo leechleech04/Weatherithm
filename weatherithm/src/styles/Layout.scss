@@ -27,10 +27,8 @@
         padding: 1rem 3rem;
         cursor: pointer;
         &:hover {
-          border-top: 3px solid #fff;
-          border-bottom: 3px solid #fff;
-          padding-top: calc(1rem - 3px);
-          padding-bottom: calc(1rem - 3px);
+          border: 3px solid #fff;
+          padding: calc(1rem - 3px) calc(3rem - 3px);
         }
         .menu-link {
           display: flex;
@@ -60,7 +58,7 @@
   }
 }
 
-.hidden {
+.menu-hidden {
   transform: translateX(-15vw);
 }
 
