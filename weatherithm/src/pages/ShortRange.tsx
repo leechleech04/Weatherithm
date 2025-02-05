@@ -17,14 +17,12 @@ const ShortRange = () => {
 
   const pos = useSelector((state: Position) => state);
 
-  const kakao = useSelector((state: any) => state.kakao);
-
   const [places, setPlaces] = useState<any>();
   useEffect(() => {
-    if (kakao.maps.services) {
-      setPlaces(new kakao.maps.services.Places());
+    if (window.kakao.maps.services) {
+      setPlaces(new window.kakao.maps.services.Places());
     }
-  }, [kakao]);
+  }, [window.kakao]);
 
   const [keyword, setKeyword] = useState('');
 
@@ -38,13 +36,31 @@ const ShortRange = () => {
       inputRef.current.focus();
     }
     const callback = (result: any, status: any) => {
-      if (status === kakao.maps.services.Status.OK) {
+      if (status === window.kakao.maps.services.Status.OK) {
         setRegionList(result);
       }
     };
 
     places.keywordSearch(keyword, callback);
   };
+
+  const regionListRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (
+      regionListRef.current &&
+      !regionListRef.current.contains(e.target as Node)
+    ) {
+      setRegionList([]);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  });
 
   return (
     <div className="background">
@@ -62,11 +78,21 @@ const ShortRange = () => {
           <CiLocationArrow1 size={40} className="search-icon" />
         </button>
       </form>
-      <div style={{ position: 'relative', width: '100%' }}>
+      <div style={{ position: 'relative', width: '100%' }} ref={regionListRef}>
         {regionList.length > 0 && (
           <ul className="region-list">
             {regionList.map((region) => (
-              <li key={region.id} className="region">
+              <li
+                key={region.id}
+                className="region"
+                onClick={() => {
+                  const { x, y } = convertLatLonToGrid(region.y, region.x);
+                  dispatch(setX(x));
+                  dispatch(setY(y));
+                  setRegionList([]);
+                  setKeyword(region.place_name);
+                }}
+              >
                 <h2>{region.place_name}</h2>
                 <p>{region.address_name}</p>
               </li>
