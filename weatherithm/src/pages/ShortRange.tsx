@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setX } from '../store';
 import { setY } from '../store';
 import convertLatLonToGrid from '../convertLatLonToGrid';
+import getShortRange from '../shortRangeApi';
 
 const ShortRange = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,8 @@ const ShortRange = () => {
     };
   });
 
+  const [regionData, setRegionData] = useState<any>();
+
   return (
     <div className="background">
       <h1 className="page-title">단기예보</h1>
@@ -85,12 +88,20 @@ const ShortRange = () => {
               <li
                 key={region.id}
                 className="region"
-                onClick={() => {
+                onClick={async () => {
                   const { x, y } = convertLatLonToGrid(region.y, region.x);
                   dispatch(setX(x));
                   dispatch(setY(y));
                   setRegionList([]);
                   setKeyword(region.place_name);
+                  setRegionData(
+                    await getShortRange(
+                      import.meta.env.VITE_API_KEY,
+                      pos.x,
+                      pos.y
+                    )
+                  );
+                  console.log(regionData);
                 }}
               >
                 <h2>{region.place_name}</h2>
@@ -115,7 +126,7 @@ const ShortRange = () => {
         <TfiTarget size={25} className="current-location-icon" />
         현재 위치 조회
       </div>
-      <p>
+      <p style={{ position: 'absolute', color: 'red', fontWeight: '900' }}>
         당신의 현재 위치: {pos.x} {pos.y}
       </p>
     </div>
