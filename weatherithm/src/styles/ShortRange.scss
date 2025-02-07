@@ -48,7 +48,7 @@
 .region-list {
   position: absolute;
   list-style: none;
-  background: #fff;
+  background-color: #fff;
   border: 2px solid black;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -56,6 +56,7 @@
   width: 100%;
   max-width: 100%;
   overflow-y: scroll;
+  z-index: 2;
 }
 
 .region {
@@ -85,5 +86,25 @@
   .current-location-icon {
     vertical-align: middle;
     margin-right: 0.5rem;
+  }
+}
+
+.today-data {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.today-data-list {
+  width: 100%;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  border-collapse: collapse;
+  th,
+  td {
+    white-space: nowrap;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    text-align: center;
+    padding: 0.5rem 1rem;
   }
 }

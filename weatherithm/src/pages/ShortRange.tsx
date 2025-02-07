@@ -1,12 +1,63 @@
 import '../styles/ShortRange.scss';
-import { CiLocationArrow1 } from 'react-icons/ci';
+import {
+  CiLocationArrow1,
+  CiCloudSun,
+  CiSun,
+  CiCloud,
+  CiCloudMoon,
+} from 'react-icons/ci';
+import { IoMoonOutline } from 'react-icons/io5';
 import { TfiTarget } from 'react-icons/tfi';
+import { FiCloudRain } from 'react-icons/fi';
+import { FaLocationArrow, FaRegSnowflake } from 'react-icons/fa';
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setX } from '../store';
 import { setY } from '../store';
 import convertLatLonToGrid from '../convertLatLonToGrid';
-import getShortRange from '../shortRangeApi';
+import todayShortRange from '../shortRangeApi';
+import moment from 'moment';
+
+const calculateTodayTime = (i: number): string => {
+  let time: number;
+  if (i >= 21) {
+    time = i - 21;
+  } else {
+    time = i + 3;
+  }
+
+  return time < 10 ? '0' + time : String(time);
+};
+
+const SKYCodeToIcon = (code: number, fcstTime: string) => {
+  if (Number(fcstTime) >= 800 && Number(fcstTime) <= 1800) {
+    switch (code) {
+      case 1:
+        return <CiSun size={40} />;
+      case 3:
+        return <CiCloudSun size={40} />;
+    }
+  } else {
+    switch (code) {
+      case 1:
+        return <IoMoonOutline size={40} />;
+      case 3:
+        return <CiCloudMoon size={40} />;
+    }
+  }
+  return <CiCloud size={40} />;
+};
+
+const PTYCodeToIcon = (code: number) => {
+  switch (code) {
+    case 1:
+    case 4:
+      return <FiCloudRain size={40} />;
+    case 2:
+    case 3:
+      return <FaRegSnowflake size={40} />;
+  }
+};
 
 const ShortRange = () => {
   const dispatch = useDispatch();
@@ -63,7 +114,7 @@ const ShortRange = () => {
     };
   });
 
-  const [regionData, setRegionData] = useState<any>();
+  const [regionTodayData, setRegionTodayData] = useState<any>();
 
   return (
     <div className="background">
@@ -94,14 +145,14 @@ const ShortRange = () => {
                   dispatch(setY(y));
                   setRegionList([]);
                   setKeyword(region.place_name);
-                  setRegionData(
-                    await getShortRange(
+                  setRegionTodayData(
+                    await todayShortRange(
                       import.meta.env.VITE_API_KEY,
                       pos.x,
                       pos.y
                     )
                   );
-                  console.log(regionData);
+                  console.log(regionTodayData);
                 }}
               >
                 <h2>{region.place_name}</h2>
@@ -113,7 +164,7 @@ const ShortRange = () => {
       </div>
       <div
         className="current-location"
-        onClick={() => {
+        onClick={async () => {
           navigator.geolocation.getCurrentPosition((position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
@@ -121,14 +172,137 @@ const ShortRange = () => {
             dispatch(setX(x));
             dispatch(setY(y));
           });
+          setRegionTodayData(
+            await todayShortRange(import.meta.env.VITE_API_KEY, pos.x, pos.y)
+          );
+          console.log(regionTodayData);
         }}
       >
         <TfiTarget size={25} className="current-location-icon" />
         현재 위치 조회
       </div>
-      <p style={{ position: 'absolute', color: 'red', fontWeight: '900' }}>
-        당신의 현재 위치: {pos.x} {pos.y}
-      </p>
+      <div className="today-data" style={{ position: 'relative' }}>
+        <h2>오늘의 예보</h2>
+        <h2
+          style={{
+            position: 'absolute',
+            right: '0.5rem',
+            top: '0.5rem',
+            fontSize: '1.3rem',
+            color: '#0098e0',
+          }}
+        >
+          {moment().format('YYYY-MM-DD')}
+        </h2>
+        <div style={{ overflowX: 'scroll', width: '100%' }}>
+          <table className="today-data-list">
+            <tr>
+              <th className="today-category">시각</th>
+              {Array(24)
+                .fill(0)
+                .map((_, i) => {
+                  return (
+                    <th key={calculateTodayTime(i)} className="today-time">
+                      {calculateTodayTime(i)}시
+                    </th>
+                  );
+                })}
+            </tr>
+            <tr>
+              <th className="today-category">하늘상태</th>
+              {regionTodayData
+                ?.filter((item: any) => item.category === 'SKY')
+                .map((data: any, i: any) => {
+                  return (
+                    <td key={calculateTodayTime(i)} className="today-data">
+                      {SKYCodeToIcon(Number(data.fcstValue), data.fcstTime)}
+                    </td>
+                  );
+                })}
+            </tr>
+            <tr>
+              <th className="today-category">강수형태</th>
+              {regionTodayData
+                ?.filter((item: any) => item.category === 'PTY')
+                .map((data: any, i: any) => {
+                  return (
+                    <td key={calculateTodayTime(i)} className="today-data">
+                      {PTYCodeToIcon(Number(data.fcstValue))}
+                    </td>
+                  );
+                })}
+            </tr>
+            <tr>
+              <th className="today-category">기온</th>
+              {regionTodayData
+                ?.filter((item: any) => item.category === 'TMP')
+                .map((data: any, i: any) => {
+                  return (
+                    <td key={calculateTodayTime(i)} className="today-data">
+                      {data.fcstValue}℃
+                    </td>
+                  );
+                })}
+            </tr>
+            <tr>
+              <th className="today-category">강수확률</th>
+              {regionTodayData
+                ?.filter((item: any) => item.category === 'POP')
+                .map((data: any, i: any) => {
+                  return (
+                    <td key={calculateTodayTime(i)} className="today-data">
+                      {data.fcstValue}%
+                    </td>
+                  );
+                })}
+            </tr>
+            <tr>
+              <th className="today-category">풍향</th>
+              {regionTodayData
+                ?.filter((item: any) => item.category === 'VEC')
+                .map((data: any, i: any) => {
+                  return (
+                    <td key={calculateTodayTime(i)} className="today-data">
+                      {
+                        <FaLocationArrow
+                          size={20}
+                          color="0098e0"
+                          style={{
+                            transform: `rotate(${data.fcstValue - 225}deg)`,
+                          }}
+                        />
+                      }
+                    </td>
+                  );
+                })}
+            </tr>
+            <tr>
+              <th className="today-category">풍속</th>
+              {regionTodayData
+                ?.filter((item: any) => item.category === 'WSD')
+                .map((data: any, i: any) => {
+                  return (
+                    <td key={calculateTodayTime(i)} className="today-data">
+                      {data.fcstValue}m/s
+                    </td>
+                  );
+                })}
+            </tr>
+            <tr>
+              <th className="today-category">습도</th>
+              {regionTodayData
+                ?.filter((item: any) => item.category === 'REH')
+                .map((data: any, i: any) => {
+                  return (
+                    <td key={calculateTodayTime(i)} className="today-data">
+                      {data.fcstValue}%
+                    </td>
+                  );
+                })}
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
