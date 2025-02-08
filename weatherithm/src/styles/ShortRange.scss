@@ -8,7 +8,7 @@
 }
 
 .keyword-search-box {
-  margin-top: 1rem;
+  margin-top: 2rem;
   display: flex;
   width: 100%;
   input {
@@ -90,8 +90,14 @@
 }
 
 .today-data {
-  margin-top: 1rem;
+  margin-top: 2rem;
   width: 100%;
+}
+
+.current-time {
+  font-weight: 700;
+  color: #0098e0;
+  display: inline-block;
 }
 
 .today-data-list {
@@ -99,6 +105,7 @@
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
   border-collapse: collapse;
+  margin-top: 0.5rem;
   th,
   td {
     white-space: nowrap;

@@ -164,6 +164,7 @@ const ShortRange = () => {
       <div
         className="current-location"
         onClick={async () => {
+          setKeyword('현재 위치');
           navigator.geolocation.getCurrentPosition((position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
@@ -180,18 +181,21 @@ const ShortRange = () => {
         현재 위치 조회
       </div>
       <div className="today-data" style={{ position: 'relative' }}>
-        <h2>오늘의 예보</h2>
-        <h2
-          style={{
-            position: 'absolute',
-            right: '0.5rem',
-            top: '0.5rem',
-            fontSize: '1.3rem',
-            color: '#0098e0',
-          }}
-        >
-          {moment().format('YYYY-MM-DD')}
+        <h2 className="current-time">
+          {moment().format('YYYY년 MM월 DD일')} 단기예보
         </h2>
+        <h3 style={{ display: 'inline-block', marginLeft: '2rem' }}>
+          최저기온{' '}
+          {
+            regionTodayData?.filter((item: any) => item.category === 'TMN')[0]
+              .fcstValue
+          }{' '}
+          / 최고기온{' '}
+          {
+            regionTodayData?.filter((item: any) => item.category === 'TMX')[0]
+              .fcstValue
+          }
+        </h3>
         <div style={{ overflowX: 'scroll', width: '100%' }}>
           <table className="today-data-list">
             <thead>
@@ -239,7 +243,11 @@ const ShortRange = () => {
                   ?.filter((item: any) => item.category === 'TMP')
                   .map((data: any, i: any) => {
                     return (
-                      <td key={calculateTodayTime(i)} className="today-data">
+                      <td
+                        key={calculateTodayTime(i)}
+                        className="today-data"
+                        style={{ fontWeight: 'bold' }}
+                      >
                         {data.fcstValue}℃
                       </td>
                     );

@@ -24,7 +24,9 @@ const Layout: React.FC = () => {
     <div>
       <div className="menu-box">
         <aside>
-          <h1>Weatherithm</h1>
+          <Link to="/main">
+            <h1>Weatherithm</h1>
+          </Link>
           <ul>
             <li>
               <Link to="/short_range" className="menu-link">
