@@ -15,3 +15,43 @@
   color: #0098e0;
   display: inline-block;
 }
+
+.current-date {
+  margin-top: 2rem;
+  font-size: 1.7rem;
+  font-weight: 700;
+  align-self: center;
+}
+
+.main-data {
+  width: 30rem;
+  margin: 0 auto;
+  margin-top: 10rem;
+  padding: 1rem;
+  border: 3px solid #0098e0;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.T1H-data {
+  font-size: 5rem;
+  color: #0098e0;
+}
+
+.SKY-data {
+  font-size: 3rem;
+}
+
+.wrap-PTY-RN1 {
+  font-size: 3rem;
+  display: flex;
+}
+
+.PTY-data {
+  margin-right: 2rem;
+}
+
+.WSD-data {
+  font-size: 3rem;
+  color: #0098e0;
+}

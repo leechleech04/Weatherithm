@@ -1,14 +1,15 @@
 import moment from 'moment';
 import axios from 'axios';
 
-const apiUrl = `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?`;
+const shortRangeUrl =
+  'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?';
 
 const todayShortRange = async (serviceKey: string, x: number, y: number) => {
   const todayDate = moment().format('YYYYMMDD');
 
   const data = await axios
     .get(
-      `${apiUrl}serviceKey=${serviceKey}&numOfRows=290&pageNo=1&base_date=${todayDate}&base_time=0200&nx=${x}&ny=${y}&dataType=JSON`
+      `${shortRangeUrl}serviceKey=${serviceKey}&numOfRows=290&pageNo=1&base_date=${todayDate}&base_time=0200&nx=${x}&ny=${y}&dataType=JSON`
     )
     .then((res) => res.data)
     .catch((error) => {
@@ -18,13 +19,21 @@ const todayShortRange = async (serviceKey: string, x: number, y: number) => {
   return data.response.body.items.item;
 };
 
+const veryShortRangeUrl =
+  'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?';
+
 const veryShortRange = async (serviceKey: string, x: number, y: number) => {
   const base_date = moment().format('YYYYMMDD');
-  const base_time = moment().format('HH00');
+  let base_time;
+  if (moment().minutes() < 30) {
+    base_time = moment().subtract(1, 'hours').format('HH30');
+  } else {
+    base_time = moment().format('HH30');
+  }
 
   const data = await axios
     .get(
-      `${apiUrl}serviceKey=${serviceKey}&numOfRows=8&pageNo=1&base_date=${base_date}&base_time=${base_time}&nx=${x}&ny=${y}&dataType=JSON`
+      `${veryShortRangeUrl}serviceKey=${serviceKey}&numOfRows=60&pageNo=1&base_date=${base_date}&base_time=${base_time}&nx=${x}&ny=${y}&dataType=JSON`
     )
     .then((res) => res.data)
     .catch((error) => {
@@ -35,3 +44,4 @@ const veryShortRange = async (serviceKey: string, x: number, y: number) => {
 };
 
 export default todayShortRange;
+export { veryShortRange };
