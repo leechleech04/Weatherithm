@@ -41,7 +41,9 @@ const Layout: React.FC = () => {
         </button>
       </div>
       <div className="content-box">
-        <Outlet />
+        <div className="background">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

@@ -186,15 +186,19 @@ const ShortRange = () => {
         </h2>
         <h3 style={{ display: 'inline-block', marginLeft: '2rem' }}>
           최저기온{' '}
-          {
-            regionTodayData?.filter((item: any) => item.category === 'TMN')[0]
-              .fcstValue
-          }{' '}
+          <span style={{ color: 'blue' }}>
+            {
+              regionTodayData?.filter((item: any) => item.category === 'TMN')[0]
+                .fcstValue
+            }
+          </span>{' '}
           / 최고기온{' '}
-          {
-            regionTodayData?.filter((item: any) => item.category === 'TMX')[0]
-              .fcstValue
-          }
+          <span style={{ color: 'red' }}>
+            {
+              regionTodayData?.filter((item: any) => item.category === 'TMX')[0]
+                .fcstValue
+            }
+          </span>
         </h3>
         <div style={{ overflowX: 'scroll', width: '100%' }}>
           <table className="today-data-list">

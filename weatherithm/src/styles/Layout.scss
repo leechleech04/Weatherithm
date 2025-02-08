@@ -16,7 +16,6 @@ a {
     height: 100%;
     width: 15vw;
     h1 {
-      text-decoration: none;
       font-family: 'Kanit', serif;
       font-size: 2.5rem;
       color: #fff;
@@ -71,4 +70,13 @@ a {
   width: 70vw;
   margin: 0 auto;
   padding: 5% 5%;
+}
+
+.background {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
