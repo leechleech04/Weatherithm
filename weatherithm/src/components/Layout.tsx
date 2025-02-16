@@ -34,6 +34,12 @@ const Layout: React.FC = () => {
                 <TiWeatherPartlySunny />
               </Link>
             </li>
+            <li>
+              <Link to="/medium_range" className="menu-link">
+                <p>중기예보</p>
+                <TiWeatherPartlySunny />
+              </Link>
+            </li>
           </ul>
         </aside>
         <button className="menu-btn" onClick={menuToggle}>

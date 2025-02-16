@@ -1,0 +1,62 @@
+.background {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.page-title {
+  font-family: 'Gothic A1' serif;
+  font-size: 2.5rem;
+  color: #0098e0;
+}
+
+.outlook {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.sub-title {
+  font-family: 'Gothic A1' serif;
+  font-size: 2rem;
+}
+
+.outlook-nav {
+  margin-top: 0.5rem;
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  li {
+    flex-grow: 1;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-bottom: 2px solid lightgray;
+    border-top: 2px solid lightgray;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+}
+
+.active-nav {
+  background-color: #0098e0;
+  color: white;
+}
+
+.outlook-content {
+  padding: 1rem;
+  width: 100%;
+  font-size: 1.3rem;
+  border-bottom: 2px solid lightgray;
+  white-space: pre-wrap;
+  line-height: 2rem;
+}
+
+.land {
+  width: 100%;
+  margin-top: 2rem;
+}
