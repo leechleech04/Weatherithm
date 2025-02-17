@@ -21,7 +21,7 @@ const Layout: React.FC = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <div className="menu-box">
         <aside>
           <Link to="/main">

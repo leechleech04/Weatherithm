@@ -60,3 +60,25 @@
   width: 100%;
   margin-top: 2rem;
 }
+
+.land-table {
+  margin-top: 0.5rem;
+  width: 100%;
+  border-collapse: collapse;
+  th,
+  td {
+    border: 2px solid lightgray;
+  }
+  th {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+  }
+  td {
+    text-align: center;
+    padding: 0.7rem;
+    img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+}
