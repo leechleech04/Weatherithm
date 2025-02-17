@@ -5,8 +5,8 @@ a {
 }
 
 .menu-box {
-  position: absolute;
-  height: 100%;
+  position: fixed;
+  height: 100vh;
   transition: all 0.3s;
   aside {
     display: inline-flex;
