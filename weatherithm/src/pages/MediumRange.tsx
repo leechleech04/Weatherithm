@@ -10,25 +10,28 @@ moment.updateLocale('ko', {
 const skyStringToImage = (sky: string) => {
   switch (sky) {
     case '구름많고 눈':
-      return <img src="/sky/구름많고 눈.png"></img>;
+      return <img src="/sky/구름많고 눈.png" />;
     case '구름많고 비':
-      return <img src="/sky/구름많고 비.png"></img>;
+      return <img src="/sky/구름많고 비.png" />;
     case '구름많고 비/눈':
-      return <img src="/sky/구름많고 비/눈.png"></img>;
+      return <img src="/sky/구름많고 비/눈.png" />;
     case '구름많음':
-      return <img src="/sky/구름많음.png"></img>;
+      return <img src="/sky/구름많음.png" />;
     case '맑음':
-      return <img src="/sky/맑음.png"></img>;
+      return <img src="/sky/맑음.png" />;
     case '소나기':
-      return <img src="/sky/소나기.png"></img>;
+      return <img src="/sky/소나기.png" />;
     case '흐리고 눈':
-      return <img src="/sky/흐리고 눈.png"></img>;
+      return <img src="/sky/흐리고 눈.png" />;
     case '흐리고 비':
-      return <img src="/sky/흐리고 비.png"></img>;
+      return <img src="/sky/흐리고 비.png" />;
     case '흐리고 비/눈':
-      return <img src="/sky/흐리고 비/눈.png"></img>;
+      return <img src="/sky/흐리고 비/눈.png" />;
     case '흐림':
-      return <img src="/sky/흐림.png"></img>;
+      return <img src="/sky/흐림.png" />;
+    case '구름많고 소나기':
+    case '흐리고 소나기':
+      return <img src="/sky/소나기.png" />;
   }
 };
 
@@ -159,6 +162,9 @@ const MediumRange = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="temp">
+        <div className="sub-title">최저/최고기온</div>
       </div>
     </div>
   );

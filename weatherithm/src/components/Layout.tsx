@@ -21,7 +21,7 @@ const Layout: React.FC = () => {
   };
 
   return (
-    <div style={{ height: '100%' }}>
+    <div>
       <div className="menu-box">
         <aside>
           <Link to="/main">
@@ -51,6 +51,7 @@ const Layout: React.FC = () => {
           <Outlet />
         </div>
       </div>
+      <footer>data.go.kr 공공데이터포털 - 기상청</footer>
     </div>
   );
 };
