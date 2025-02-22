@@ -98,6 +98,70 @@ const MediumRange = () => {
     fetchLand();
   }, []);
 
+  const tempRegions = {
+    '서울·인천·경기도': {
+      서울: '11B10101',
+      인천: '11B20201',
+      수원: '11B20601',
+      파주: '11B20305',
+      이천: '11B20701',
+      평택: '11B20606',
+    },
+    '강원도 영서': {
+      춘천: '11D10301',
+      원주: '11D10401',
+    },
+    '강원도 영동': {
+      강릉: '11D20501',
+    },
+    '대전·세종·충청남도': {
+      대전: '11C20401',
+      세종: '11C20404',
+      홍성: '11C20104',
+    },
+    충청북도: {
+      청주: '11C10301',
+      충주: '11C10101',
+      영동: '11C10402',
+    },
+    '광주·전라남도': {
+      광주: '11F20501',
+      목포: '21F20801',
+      여수: '11F20401',
+      순천: '11F20603',
+      광양: '11F20402',
+      나주: '11F20503',
+    },
+    전북자치도: {
+      전주: '11F10201',
+      군산: '21F10501',
+      정읍: '11F10203',
+      남원: '11F10401',
+      고창: '21F10601',
+      무주: '11F10302',
+    },
+    '부산·울산·경상남도': {
+      부산: '11H20201',
+      울산: '11H20101',
+      창원: '11H20301',
+      진주: '11H20701',
+      거창: '11H20502',
+      통영: '11H20401',
+    },
+    '대구·경상북도': {
+      대구: '11H10701',
+      안동: '11H10501',
+      포항: '11H10201',
+      경주: '11H10202',
+      울진: '11H10101',
+      울릉도: '11E00101',
+    },
+    제주도: {
+      제주: '11G00201',
+      서귀포: '11G00401',
+    },
+  };
+
   const [tempMin, setTempMin] = useState<any[]>([]);
   const [tempMax, setTempMax] = useState<any[]>([]);
   const [tempRegion, setTempRegion] = useState('11B10101');
@@ -244,6 +308,21 @@ const MediumRange = () => {
       </div>
       <div className="temp">
         <h2 className="sub-title">최저/최고기온</h2>
+        <select
+          value={tempRegion}
+          onChange={(e) => setTempRegion(e.target.value)}
+          className="temp-select"
+        >
+          {Object.entries(tempRegions).map(([region, cities]) => (
+            <optgroup key={region} label={region}>
+              {Object.entries(cities).map(([city, code]) => (
+                <option key={code} value={code}>
+                  {city}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
         <Line options={options} data={data} className="temp-chart" />
       </div>
     </div>
