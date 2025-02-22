@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import '../styles/MediumRange.scss';
-import { getMediumRangeOutlook, getMediumRangeLand } from '../mediumRangeApi';
+import {
+  getMediumRangeOutlook,
+  getMediumRangeLand,
+  getMediumRangeTemp,
+} from '../mediumRangeApi';
 import moment from 'moment';
+import { Line } from 'react-chartjs-2';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 moment.updateLocale('ko', {
   weekdaysShort: ['일', '월', '화', '수', '목', '금', '토'],
@@ -91,6 +98,78 @@ const MediumRange = () => {
     fetchLand();
   }, []);
 
+  const [tempMin, setTempMin] = useState<any[]>([]);
+  const [tempMax, setTempMax] = useState<any[]>([]);
+  const [tempRegion, setTempRegion] = useState('11B10101');
+
+  useEffect(() => {
+    const fetchTemp = async () => {
+      const { tempMin, tempMax } = await getMediumRangeTemp(
+        import.meta.env.VITE_DECODING_API_KEY,
+        tempRegion
+      );
+      setTempMin(tempMin);
+      setTempMax(tempMax);
+    };
+    fetchTemp();
+  }, [tempRegion]);
+
+  const data = {
+    labels:
+      moment().hour() < 6
+        ? Array.from({ length: 6 }).map((_, i) =>
+            moment()
+              .add(i + 5, 'days')
+              .format('MM/DD(ddd)')
+          )
+        : Array.from({ length: 7 }).map((_, i) =>
+            moment()
+              .add(i + 4, 'days')
+              .format('MM/DD(ddd)')
+          ),
+    datasets: [
+      {
+        label: '최고기온',
+        data: tempMax,
+        borderWidth: 2,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        pointRadius: 5,
+      },
+      {
+        label: '최저기온',
+        data: tempMin,
+        borderWidth: 2,
+        borderColor: 'rgb(54, 162, 235)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        pointRadius: 5,
+      },
+    ],
+  };
+
+  const options = {
+    interaction: {
+      mode: 'index' as const,
+      intersect: true,
+    },
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            size: 16,
+          },
+        },
+      },
+      y: {
+        ticks: {
+          font: {
+            size: 16,
+          },
+        },
+      },
+    },
+  };
+
   return (
     <div className="background">
       <h1 className="page-title">중기예보</h1>
@@ -116,15 +195,15 @@ const MediumRange = () => {
             <tr>
               <th rowSpan={2}>지역</th>
               {moment().hour() < 6
-                ? Array.from({ length: 7 }).map((_, i) => (
+                ? Array.from({ length: 6 }).map((_, i) => (
                     <th
                       key={i}
-                      colSpan={i < 4 ? 2 : undefined}
-                      rowSpan={i >= 4 ? 2 : undefined}
+                      colSpan={i < 3 ? 2 : undefined}
+                      rowSpan={i >= 3 ? 2 : undefined}
                     >
                       {moment()
                         .subtract(1, 'days')
-                        .add(i + 4, 'days')
+                        .add(i + 5, 'days')
                         .format('MM/DD(ddd)')}
                     </th>
                   ))
@@ -164,7 +243,8 @@ const MediumRange = () => {
         </table>
       </div>
       <div className="temp">
-        <div className="sub-title">최저/최고기온</div>
+        <h2 className="sub-title">최저/최고기온</h2>
+        <Line options={options} data={data} className="temp-chart" />
       </div>
     </div>
   );

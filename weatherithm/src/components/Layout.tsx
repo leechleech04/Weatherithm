@@ -51,7 +51,11 @@ const Layout: React.FC = () => {
           <Outlet />
         </div>
       </div>
-      <footer>data.go.kr 공공데이터포털 - 기상청</footer>
+      <footer>
+        <p>data.go.kr 공공데이터포털 - 기상청</p>
+        <p>kakao developer - kakao map</p>
+        <p>기상청 날씨누리</p>
+      </footer>
     </div>
   );
 };
