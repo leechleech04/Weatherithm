@@ -4,7 +4,7 @@ const x = createSlice({
   name: 'x',
   initialState: 0,
   reducers: {
-    setX: (state, action: PayloadAction<number>) => action.payload,
+    setX: (_state, action: PayloadAction<number>) => action.payload,
   },
 });
 
@@ -14,7 +14,7 @@ const y = createSlice({
   name: 'y',
   initialState: 0,
   reducers: {
-    setY: (state, action: PayloadAction<number>) => action.payload,
+    setY: (_state, action: PayloadAction<number>) => action.payload,
   },
 });
 

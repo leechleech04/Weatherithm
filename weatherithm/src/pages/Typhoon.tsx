@@ -19,7 +19,7 @@ const Typhoon = () => {
       <h1 className="page-title">태풍</h1>
       <div className="typhoon-content">
         {typhoonData.length > 0 ? (
-          typhoonData.map((typhoon) => <div></div>)
+          typhoonData.map(() => <div></div>)
         ) : (
           <p className="no-data">
             <FcNoIdea size={50} /> 최근 3일 이내 발생한 태풍이 없습니다.
