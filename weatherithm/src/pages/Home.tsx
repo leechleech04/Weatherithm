@@ -31,7 +31,7 @@ const Home: React.FC = () => {
     <div className="home-background" style={{ backgroundColor: bgColor }}>
       <div className="circle">
         <h1>Weatherithm</h1>
-        <p>당신의 하루를 맞춤 설계하는 날씨 서비스</p>
+        <p>당신의 하루를 맞춤 설계하는 날씨 예보 서비스</p>
         <Link to="/main" className="main-link">
           시작하기
         </Link>

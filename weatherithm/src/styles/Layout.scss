@@ -26,8 +26,6 @@ a {
       width: 100%;
       li {
         width: 100%;
-        font-size: 1.5rem;
-        font-weight: 700;
         padding: 1rem 3rem;
         cursor: pointer;
         &:hover {
@@ -37,12 +35,19 @@ a {
         .menu-link {
           display: flex;
           color: #fff;
-          p {
-            flex-grow: 1;
-          }
         }
       }
     }
+  }
+
+  .menu-name {
+    flex-grow: 1;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .menu-icon {
+    font-size: 2rem;
   }
 
   .menu-btn {
@@ -55,7 +60,7 @@ a {
     font-size: 3rem;
     vertical-align: top;
     padding: 0 0.5rem;
-    .menu-icon {
+    .menu-bar {
       vertical-align: middle;
     }
   }
@@ -66,7 +71,7 @@ a {
 }
 
 .content-box {
-  height: 100%;
+  min-height: 85vh;
   width: 70vw;
   margin: 0 auto;
   padding: 5% 5%;

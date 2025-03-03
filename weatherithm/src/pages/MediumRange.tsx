@@ -21,7 +21,7 @@ const skyStringToImage = (sky: string) => {
     case '구름많고 비':
       return <img src="/sky/구름많고 비.png" />;
     case '구름많고 비/눈':
-      return <img src="/sky/구름많고 비/눈.png" />;
+      return <img src="/sky/구름많고 비눈.png" />;
     case '구름많음':
       return <img src="/sky/구름많음.png" />;
     case '맑음':
@@ -33,7 +33,7 @@ const skyStringToImage = (sky: string) => {
     case '흐리고 비':
       return <img src="/sky/흐리고 비.png" />;
     case '흐리고 비/눈':
-      return <img src="/sky/흐리고 비/눈.png" />;
+      return <img src="/sky/흐리고 비눈.png" />;
     case '흐림':
       return <img src="/sky/흐림.png" />;
     case '구름많고 소나기':
